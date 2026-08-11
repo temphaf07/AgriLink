@@ -3,6 +3,7 @@ dist/
 .env
 coverage/
 uploads/
+backend/uploads/
 node_modules/
 .env
 .env.*

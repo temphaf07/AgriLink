@@ -16,6 +16,8 @@ const productSchema = new mongoose.Schema({
   harvestDate: Date,
   farmingMethod: { type: String, enum: ['conventional', 'organic', 'natural', 'other'], default: 'conventional', index: true },
   isOrganic: { type: Boolean, default: false, index: true },
+  averageRating: { type: Number, default: 0, min: 0, max: 5, index: true },
+  reviewCount: { type: Number, default: 0, min: 0 },
   images: [{ url: String, publicId: String }],
   location: { village: String, district: String, state: String },
   verificationStatus: { type: String, enum: ['pending', 'verified', 'rejected'], default: 'pending', index: true },

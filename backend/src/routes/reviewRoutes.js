@@ -1,0 +1,2 @@
+import { Router } from 'express'; import { createReview, deleteReview, listReviews, updateReview } from '../controllers/reviewController.js'; import { protect, allowRoles } from '../middleware/auth.js';
+const router = Router(); router.get('/products/:productId/reviews', listReviews); router.post('/products/:productId/reviews', protect, allowRoles('buyer'), createReview); router.patch('/reviews/:id', protect, allowRoles('buyer'), updateReview); router.delete('/reviews/:id', protect, deleteReview); export default router;
