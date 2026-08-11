@@ -1,0 +1,2 @@
+import { Router } from 'express'; import { createOrder, getOrder, listOrders, updateStatus } from '../controllers/orderController.js'; import { allowRoles, protect } from '../middleware/auth.js';
+const router = Router(); router.use(protect); router.get('/', listOrders); router.post('/', allowRoles('buyer'), createOrder); router.get('/:id', getOrder); router.patch('/:id/status', updateStatus); export default router;

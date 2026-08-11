@@ -1,0 +1,33 @@
+{
+  "info": { "name": "AgriLink API", "description": "Set baseUrl and paste a JWT into token after Login.", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json" },
+  "variable": [{ "key": "baseUrl", "value": "http://localhost:5000/api" }, { "key": "token", "value": "" }, { "key": "productId", "value": "" }, { "key": "orderId", "value": "" }, { "key": "userId", "value": "" }],
+  "item": [
+    { "name": "Health", "request": { "method": "GET", "url": "{{baseUrl}}/health" } },
+    { "name": "Auth", "item": [
+      { "name": "Register buyer", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/auth/register", "body": { "mode": "raw", "raw": "{\n  \"name\": \"New Buyer\",\n  \"email\": \"newbuyer@example.com\",\n  \"password\": \"Buyer@123\",\n  \"role\": \"buyer\"\n}" } } },
+      { "name": "Login", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/auth/login", "body": { "mode": "raw", "raw": "{\n  \"email\": \"priya@agrilink.in\",\n  \"password\": \"Buyer@123\"\n}" } } },
+      { "name": "Current user", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/auth/me" } }
+    ] },
+    { "name": "Products", "item": [
+      { "name": "Browse, search and filter", "request": { "method": "GET", "url": "{{baseUrl}}/products?search=tomato&category=Vegetables&availability=in-stock&sort=price" } },
+      { "name": "Get product", "request": { "method": "GET", "url": "{{baseUrl}}/products/{{productId}}" } },
+      { "name": "Create product (farmer)", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/products", "body": { "mode": "raw", "raw": "{\n  \"name\": \"Fresh Tomato\",\n  \"description\": \"Fresh harvest\",\n  \"category\": \"Vegetables\",\n  \"price\": 42,\n  \"unit\": \"kg\",\n  \"availableQuantity\": 100,\n  \"location\": { \"district\": \"Nashik\", \"state\": \"Maharashtra\" }\n}" } } },
+      { "name": "Update product (farmer)", "request": { "method": "PATCH", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/products/{{productId}}", "body": { "mode": "raw", "raw": "{ \"availableQuantity\": 80 }" } } },
+      { "name": "Deactivate product (farmer)", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/products/{{productId}}" } },
+      { "name": "Verify product (admin)", "request": { "method": "PATCH", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/products/{{productId}}/verification", "body": { "mode": "raw", "raw": "{ \"status\": \"verified\" }" } } }
+    ] },
+    { "name": "Cart and orders", "item": [
+      { "name": "Get cart", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/cart" } },
+      { "name": "Add cart item", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/cart/items", "body": { "mode": "raw", "raw": "{ \"productId\": \"{{productId}}\", \"quantity\": 2 }" } } },
+      { "name": "Create order", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/orders", "body": { "mode": "raw", "raw": "{\n  \"items\": [{ \"productId\": \"{{productId}}\", \"quantity\": 2 }],\n  \"deliveryAddress\": { \"name\": \"Priya Sharma\", \"phone\": \"9876543210\", \"line1\": \"12 Green Lane\", \"city\": \"Pune\", \"state\": \"Maharashtra\", \"pincode\": \"411001\" }\n}" } } },
+      { "name": "List orders", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/orders" } },
+      { "name": "Update order status", "request": { "method": "PATCH", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/orders/{{orderId}}/status", "body": { "mode": "raw", "raw": "{ \"status\": \"cancelled\" }" } } }
+    ] },
+    { "name": "Admin and analytics", "item": [
+      { "name": "List users (admin)", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/users?verificationStatus=pending" } },
+      { "name": "Verify user (admin)", "request": { "method": "PATCH", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/users/{{userId}}/verification", "body": { "mode": "raw", "raw": "{ \"status\": \"verified\" }" } } },
+      { "name": "Dashboard analytics", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/analytics/dashboard" } }
+    ] },
+    { "name": "Uploads", "item": [{ "name": "Upload image (Cloudinary configured)", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/uploads/image", "body": { "mode": "formdata", "formdata": [{ "key": "image", "type": "file", "src": "" }] } } }] }
+  ]
+}

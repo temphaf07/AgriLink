@@ -1,0 +1,2 @@
+import { Router } from 'express'; import { addWishlistProduct, getWishlist, removeWishlistProduct } from '../controllers/wishlistController.js'; import { allowRoles, protect } from '../middleware/auth.js';
+const router = Router(); router.use(protect, allowRoles('buyer')); router.get('/', getWishlist); router.post('/', addWishlistProduct); router.delete('/:productId', removeWishlistProduct); export default router;

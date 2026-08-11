@@ -1,0 +1,2 @@
+import { Router } from 'express'; import { updateMe, updateVerification, users } from '../controllers/userController.js'; import { allowRoles, protect } from '../middleware/auth.js';
+const router = Router(); router.use(protect); router.patch('/me', updateMe); router.get('/', allowRoles('admin'), users); router.patch('/:id/verification', allowRoles('admin'), updateVerification); export default router;

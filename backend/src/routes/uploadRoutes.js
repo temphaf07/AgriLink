@@ -1,0 +1,2 @@
+import { Router } from 'express'; import multer from 'multer'; import { uploadImage } from '../controllers/uploadController.js'; import { protect } from '../middleware/auth.js'; import AppError from '../utils/AppError.js';
+const router = Router(); const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 }, fileFilter: (_, file, cb) => file.mimetype.startsWith('image/') ? cb(null, true) : cb(new AppError('Only image files are allowed.', 422)) }); router.post('/image', protect, upload.single('image'), uploadImage); export default router;
