@@ -1,49 +1,162 @@
 # AgriLink — Farmer-to-Buyer Marketplace
 
-AgriLink is a MERN marketplace that connects verified farmers directly to consumers, retailers, and wholesalers. It supports a complete MVP transaction path: farmer listing → administrator verification → buyer cart/order → inventory update → farmer fulfilment → real-data analytics.
+AgriLink is a full-stack MERN marketplace designed to connect verified farmers directly with consumers, retailers, and wholesalers.
 
-## Stack
+The platform provides a complete marketplace workflow from farmer product listing and administrator verification to buyer cart and ordering, inventory management, farmer fulfilment, and dashboard analytics.
 
-React + Vite + Tailwind CSS; Node.js + Express; MongoDB + Mongoose; JWT + bcrypt; Cloudinary uploads (when credentials are configured).
+## 🚀 Project Overview
 
-## Features
+AgriLink was developed as a hackathon project focused on building a practical digital marketplace for agricultural products.
 
-- Secure JWT sessions, password hashing, role authorization, validation, rate limiting, Helmet, CORS and centralized errors.
-- Farmer product CRUD, status/inventory controls, order workflow, performance metrics.
-- Public verified marketplace with server-side search, category, price, availability and sorting filters.
-- Buyer cart and direct farmer-specific checkout; order values are always calculated by the API.
-- Admin user/product verification, user/order oversight and marketplace statistics calculated from the database.
-- Cloudinary image upload endpoint at `POST /api/uploads/image` with image-only and 5 MB validation.
+The system provides separate workflows for:
 
-## Run locally
+- 👨‍🌾 Farmers
+- 🛒 Buyers
+- 🛡️ Administrators
 
-1. Copy `backend/.env.example` to `backend/.env` and set `MONGODB_URI` and a long `JWT_SECRET`. Copy `frontend/.env.example` to `frontend/.env` if needed.
-2. Run `npm.cmd install` from the repository root.
-3. Run `npm.cmd run seed` to add demo data.
-4. Run `npm.cmd run dev`, then open `http://localhost:5173`.
+The application combines marketplace functionality, secure role-based access, agricultural product information, wholesale purchasing support, and local AI assistance.
 
-For separate terminals, use `npm.cmd run dev --workspace backend` and `npm.cmd run dev --workspace frontend`. MongoDB must be running before starting the API.
+## ✨ Key Features
 
-Demo accounts: `admin@agrilink.in / Admin@123`; `ramesh@agrilink.in / Farmer@123`; `priya@agrilink.in / Buyer@123`.
+### 🛒 Marketplace
 
-## API overview
+- Public marketplace for verified and active products
+- Server-side product search
+- Category filtering
+- Price filtering
+- Availability filtering
+- Product sorting
+- Product details and inventory information
 
-`/api/auth`, `/api/users`, `/api/products`, `/api/cart`, `/api/orders`, `/api/analytics/dashboard`, and `/api/uploads/image`. A starter importable Postman collection is included in `postman_collection.json`.
+### 👨‍🌾 Farmer Features
 
-Orders require a complete delivery address. Cloudinary uploads return a clear configuration error until all three Cloudinary environment variables are supplied; no upload is faked in local development.
+- Farmer registration and authentication
+- Product creation, editing, and management
+- Inventory and product status controls
+- Order fulfilment workflow
+- Farmer-specific dashboard
+- Performance metrics
 
-## Testing
+### 🛍️ Buyer Features
 
-`npm.cmd run build` performs a frontend production build. The seeded demo accounts support the full manual flow: farmer listing, admin verification, buyer ordering, farmer fulfilment, and dashboard analytics. The Postman collection covers health, auth, product CRUD/verification, cart, orders, users, analytics, and uploads.
+- Browse agricultural products
+- Search and filter products
+- Add products to cart
+- Wishlist functionality
+- Farmer-specific checkout
+- Order management
+- Wholesale purchasing support
+- Minimum order quantity support
+- Bulk discount support
 
-## Local AI setup
+### 🛡️ Admin Features
 
-AgriLink AI uses local Ollama only—no paid cloud AI service is required. Start Ollama, ensure `phi:latest` is installed, then set `OLLAMA_URL=http://127.0.0.1:11434` and `OLLAMA_MODEL=phi:latest` in `backend/.env`. Signed-in users can open the floating AgriLink AI panel. `POST /api/ai/chat` is JWT-protected and retrieves only role-authorized marketplace data before responding. Marketplace search requests return deterministic real product data; contextual buyer, farmer, and admin insights use the local model. If Ollama is stopped, the UI shows a clear unavailable message.
+- User verification and management
+- Product verification
+- Order oversight
+- Marketplace statistics
+- Dashboard analytics
 
-## Data design & business model
+### 🤖 AgriLink AI
 
-Users, Products, Cart and Orders use MongoDB references. Product stock is decremented server-side only after a validated order. Orders persist price snapshots and a configurable `PLATFORM_COMMISSION_PERCENT`, allowing future payment settlement without restructuring. Subscription plans can be introduced as a separate billing collection/service.
+AgriLink includes a local AI assistant powered through Ollama.
 
-## Deploy
+- Local AI processing using `phi:latest`
+- JWT-protected AI API
+- Role-aware responses for buyers, farmers, and administrators
+- Access to authorized marketplace data
+- Deterministic product search results using real marketplace data
+- Floating AI assistant interface
+- Clear unavailable status when Ollama is not running
 
-Deploy `frontend` to Vercel with `VITE_API_URL`; deploy `backend` to a Node host with MongoDB Atlas, Cloudinary variables and a restricted `FRONTEND_URL`. Never deploy `.env` files or secret keys.
+No paid cloud AI service is required for the local AI setup.
+
+### 🔐 Security
+
+- JWT authentication
+- Password hashing with bcrypt
+- Role-based authorization
+- Request validation
+- Rate limiting
+- Helmet security headers
+- CORS configuration
+- Centralized error handling
+- Server-side price calculation
+- Server-side inventory validation
+- Server-side minimum order quantity validation
+
+## 🧑‍💻 Technology Stack
+
+### Frontend
+
+- React
+- Vite
+- Tailwind CSS
+- JavaScript
+
+### Backend
+
+- Node.js
+- Express.js
+- JavaScript
+
+### Database
+
+- MongoDB
+- Mongoose
+
+### Authentication & Security
+
+- JWT
+- bcrypt
+- Helmet
+- CORS
+
+### AI
+
+- Ollama
+- `phi:latest`
+
+### Image Management
+
+- Cloudinary
+
+## 📸 Project Screenshots
+
+The following screenshots demonstrate the AgriLink application interface and development environment.
+
+### Application Screenshots
+
+![AgriLink Screenshot](screenshots/Screenshot%202026-08-14%20193229.png)
+
+![AgriLink Screenshot](screenshots/Screenshot%202026-08-14%20193323.png)
+
+![AgriLink Screenshot](screenshots/Screenshot%202026-08-14%20193406.png)
+
+![AgriLink Screenshot](screenshots/Screenshot%202026-08-14%20193426.png)
+
+![AgriLink Screenshot](screenshots/Screenshot%202026-08-14%20193449.png)
+
+![AgriLink Screenshot](screenshots/Screenshot%202026-08-14%20193504.png)
+
+![AgriLink Screenshot](screenshots/Screenshot%202026-08-14%20193548.png)
+
+![AgriLink Screenshot](screenshots/Screenshot%202026-08-14%20193622.png)
+
+![AgriLink Screenshot](screenshots/Screenshot%202026-08-14%20193640.png)
+
+## 🏗️ Project Structure
+
+```text
+AgriLink/
+├── frontend/
+│   └── React + Vite application
+│
+├── backend/
+│   └── Node.js + Express API
+│
+├── screenshots/
+│   └── Project screenshots
+│
+├── postman_collection.json
+└── README.md
